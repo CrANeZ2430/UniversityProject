@@ -32,8 +32,16 @@ public class DepartmentEntityTypeConfiguration : IEntityTypeConfiguration<Depart
             .HasForeignKey(x => x.FacultyId)
             .IsRequired();
 
+        builder.HasMany(x => x.Groups)
+            .WithOne(x => x.Department)
+            .HasForeignKey(x => x.DepartmentId);
+
         builder.Metadata
             .FindNavigation(nameof(Department.Faculty))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.Metadata
+            .FindNavigation(nameof(Department.Groups))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

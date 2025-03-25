@@ -3,4 +3,5 @@
 public record DepartmentDto(
     Guid DepartmentId,
     string Title,
-    string Description);
+    string Description,
+    GroupDto[] Groups);

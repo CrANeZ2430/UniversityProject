@@ -3,9 +3,11 @@ using System.Reflection;
 using University.Core.Common;
 using University.Core.Domain.Departments.Common;
 using University.Core.Domain.Faculties.Common;
+using University.Core.Domain.Groups.Common;
 using University.Infrastructure.Core.Common;
 using University.Infrastructure.Core.Domain.Departments.Common;
 using University.Infrastructure.Core.Domain.Faculties.Common;
+using University.Infrastructure.Core.Domain.Groups.Common;
 using University.Infrastructure.Middleware;
 
 namespace University.Infrastructure;
@@ -19,6 +21,7 @@ public static class InfrastructureRegistration
         services.AddScoped<IUnitOfWork, UnitOfWork>();
         services.AddScoped<IFacultiesRepository, FacultiesRepository>();
         services.AddScoped<IDepartmentsRepository, DepartmentsRepository>();
+        services.AddScoped<IGroupsRepository, GroupsRepository>();
 
         services.AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>();
         services.AddTransient<ExceptionHandlerMiddleware>();

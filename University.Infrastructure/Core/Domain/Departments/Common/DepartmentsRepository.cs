@@ -22,7 +22,7 @@ public class DepartmentsRepository(UniversityDbContext dbContext) : IDepartments
     {
         return await dbContext.Departments
             .FirstOrDefaultAsync(x => x.DepartmentId == departmentId, cancellationToken)
-            ?? throw new NotFoundException($"Cannot find the {nameof(Department)} with id: {departmentId}");
+            ?? throw new NotFoundException($"Cannot find the {nameof(Department)} with id {departmentId}");
     }
 
     public async Task<Department?> TryGetById(Guid departmentId, CancellationToken cancellationToken = default)

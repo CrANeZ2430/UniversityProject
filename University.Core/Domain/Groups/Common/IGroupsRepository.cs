@@ -4,8 +4,8 @@ namespace University.Core.Domain.Groups.Common;
 
 public interface IGroupsRepository
 {
-    Task Add(Group faculty);
-    void Remove(Group faculty);
-    Task<Group> GetById(Guid facultyId, CancellationToken cancellationToken = default);
-    Task<Group?> TryGetById(Guid facultyId, CancellationToken cancellationToken = default);
+    Task Add(Group group);
+    void Remove(Group group);
+    Task<Group> GetById(Guid groupId, CancellationToken cancellationToken = default);
+    Task<Group?> TryGetById(Guid groupId, CancellationToken cancellationToken = default);
 }

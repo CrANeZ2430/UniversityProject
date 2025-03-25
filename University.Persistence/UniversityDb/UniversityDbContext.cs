@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using University.Core.Domain.Departments.Models;
 using University.Core.Domain.Faculties.Models;
+using University.Core.Domain.Groups.Models;
 
 namespace University.Persistence.UniversityDb;
 
@@ -13,6 +14,7 @@ public class UniversityDbContext(
 
     public DbSet<Faculty> Faculties { get; set; }
     public DbSet<Department> Departments { get; set; }
+    public DbSet<Group> Groups { get; set; }
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {

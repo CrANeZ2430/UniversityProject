@@ -7,7 +7,17 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Domain\Group\**" />
+    <EmbeddedResource Remove="Domain\Group\**" />
+    <None Remove="Domain\Group\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\University.Core\University.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Domain\Students\" />
   </ItemGroup>
 
 </Project>

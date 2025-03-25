@@ -21,7 +21,7 @@ public class CreateDepartmentDataValidator : AbstractValidator<CreateDepartmentD
 
         RuleFor(x => x.FacultyId)
             .NotEmpty().WithMessage($"{nameof(CreateDepartmentData.FacultyId)} cannot be empty")
-            .MustAsync(async (x , ct) => await facultiesRepository.TryGetById(x) != null)
+            .MustAsync(async (id , cancellationToken) => await facultiesRepository.TryGetById(id, cancellationToken) != null)
             .WithMessage($"{nameof(CreateDepartmentData.FacultyId)} must be {nameof(Faculty)} id");
     }
 }

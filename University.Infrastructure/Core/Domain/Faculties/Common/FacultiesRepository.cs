@@ -22,7 +22,7 @@ public class FacultiesRepository(UniversityDbContext dbContext) : IFacultiesRepo
     {
         return await dbContext.Faculties
             .FirstOrDefaultAsync(x => x.FacultyId == facultyId, cancellationToken)
-            ?? throw new NotFoundException($"Cannot find the {nameof(Faculty)} with id: {facultyId}");
+            ?? throw new NotFoundException($"Cannot find the {nameof(Faculty)} with id {facultyId}");
     }
 
     public async Task<Faculty?> TryGetById(Guid facultyId, CancellationToken cancellationToken = default)

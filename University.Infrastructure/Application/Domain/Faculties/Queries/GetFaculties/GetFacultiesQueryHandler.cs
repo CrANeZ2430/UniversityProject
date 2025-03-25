@@ -17,6 +17,7 @@ public class GetFacultiesQueryHandler(
         var sqlQuery = dbContext
             .Faculties
             .Include(x => x.Departments)
+            .ThenInclude(x => x.Groups)
             .AsNoTracking();
 
         var skip = query.PageSize * (query.Page - 1);
@@ -35,7 +36,14 @@ public class GetFacultiesQueryHandler(
                 .Select(x => new DepartmentDto(
                     x.DepartmentId,
                     x.Title,
-                    x.Description))
+                    x.Description,
+                    x.Groups
+                    .Select(x => new GroupDto(
+                        x.GroupId,
+                        x.Name,
+                        x.MaxStudents,
+                        42))
+                    .ToArray()))
                 .ToArray()))
             .ToArrayAsync(cancellationToken);
 
