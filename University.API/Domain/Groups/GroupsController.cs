@@ -6,6 +6,7 @@ using University.API.Domain.Groups.Records;
 using University.Application.Common;
 using University.Application.Domain.Groups.Commands.CreateGroup;
 using University.Application.Domain.Groups.Commands.DeleteCommand;
+using University.Application.Domain.Groups.Commands.UpdateGroup;
 using University.Application.Domain.Students.Query.GetGroupStudents;
 
 namespace University.API.Domain.Groups
@@ -47,6 +48,24 @@ namespace University.API.Domain.Groups
             var id = await mediator.Send(command);
 
             return Ok(id);
+        }
+
+        [HttpPut("{groupId}")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> UpdateGroup(
+            [FromRoute][Required] Guid groupId,
+            [FromQuery] UpdateGroupRequest request,
+            CancellationToken cancellationToken = default)
+        {
+            var command = new UpdateGroupCommand(
+                groupId,
+                request.Name,
+                request.MaxStudents,
+                request.DepartmentId);
+
+            await mediator.Send(command, cancellationToken);
+
+            return Ok();
         }
 
         [HttpDelete("{groupId}")]

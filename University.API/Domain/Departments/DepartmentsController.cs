@@ -5,6 +5,7 @@ using University.API.Common.Constants;
 using University.Application.Domain.Departments.Commands.CreateDepartment;
 using University.API.Domain.Departments.Records;
 using University.Application.Domain.Departments.Commands.DeleteDepartment;
+using University.Application.Domain.Departments.Commands.UpdateDepartment;
 
 namespace University.API.Domain.Departments;
 
@@ -27,6 +28,24 @@ public class DepartmentsController(
         var id = await mediator.Send(command, cancellationToken);
 
         return Ok(id);
+    }
+
+    [HttpPut("{departmentId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateDepartment(
+        [FromRoute][Required] Guid departmentId,
+        [FromQuery] UpdateDepartmentRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UpdateDepartmentCommand(
+            departmentId,
+            request.Title,
+            request.Description,
+            request.FacultyId);
+
+        await mediator.Send(command, cancellationToken);
+
+        return Ok();
     }
 
     [HttpDelete("{departmentId}")]

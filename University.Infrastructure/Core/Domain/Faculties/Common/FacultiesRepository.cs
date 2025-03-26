@@ -25,9 +25,9 @@ public class FacultiesRepository(UniversityDbContext dbContext) : IFacultiesRepo
             ?? throw new NotFoundException($"Cannot find the {nameof(Faculty)} with id {facultyId}");
     }
 
-    public async Task<Faculty?> TryGetById(Guid facultyId, CancellationToken cancellationToken = default)
+    public async Task<bool> Exits(Guid facultyId, CancellationToken cancellationToken = default)
     {
         return await dbContext.Faculties
-            .FirstOrDefaultAsync(x => x.FacultyId == facultyId, cancellationToken);
+            .AnyAsync(x => x.FacultyId == facultyId, cancellationToken);
     }
 }

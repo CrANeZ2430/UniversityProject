@@ -20,7 +20,7 @@ public class CreateFacultyCommandHandler(
         var faculty = await Faculty.Create(data);
 
         await facultiesRepository.Add(faculty, cancellationToken);
-        await unitOfWork.SaveChangesAsync();
+        await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return faculty.FacultyId;
     }

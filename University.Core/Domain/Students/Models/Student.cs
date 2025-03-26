@@ -1,6 +1,8 @@
 ﻿using University.Core.Common;
 using University.Core.Domain.Groups.Common;
 using University.Core.Domain.Groups.Models;
+using University.Core.Domain.Students.Checkers;
+using University.Core.Domain.Students.Common;
 using University.Core.Domain.Students.Data;
 using University.Core.Domain.Students.Validators;
 
@@ -42,9 +44,17 @@ public class Student : Entity
     public static async Task<Student> Create(
         CreateStudentData data,
         IGroupsRepository groupsRepository,
+        IEmailMustBeUniqueChecker emailChecker,
+        IPhoneMustBeUniqueChecker phoneChecker,
         CancellationToken cancellationToken = default)
     {
-        await ValidateAsync(new CreateStudentDataValidator(groupsRepository), data, cancellationToken);
+        await ValidateAsync(
+            new CreateStudentDataValidator(
+                groupsRepository, 
+                emailChecker, 
+                phoneChecker), 
+            data, 
+            cancellationToken);
 
         return new Student(
             Guid.NewGuid(),
@@ -54,5 +64,41 @@ public class Student : Entity
             data.Email,
             data.PhoneNumber,
             data.GroupId);
+    }
+
+    public async Task Update(
+        UpdateStudentData data,
+        IGroupsRepository groupsRepository,
+        IEmailMustBeUniqueChecker emailChecker,
+        IPhoneMustBeUniqueChecker phoneChecker,
+        CancellationToken cancellationToken = default)
+    {
+        await ValidateAsync(new UpdateStudentDataValidator(
+            groupsRepository,
+            emailChecker,
+            phoneChecker), 
+            data, 
+            cancellationToken);
+
+        FirstName = data.FirstName;
+        LastName = data.LastName;
+        MiddleName = data.MiddleName;
+        Email = data.Email;
+        PhoneNumber = data.PhoneNumber;
+        GroupId = data.GroupId;
+    }
+
+    public async Task ReassignGroup(
+        ReassignGroupData data,
+        IGroupsRepository groupsRepository,
+        CancellationToken cancellationToken = default)
+    {
+        await ValidateAsync(
+            new ReassignGroupDataValidator(
+                groupsRepository), 
+            data, 
+            cancellationToken);
+
+        GroupId = data.GroupId;
     }
 }

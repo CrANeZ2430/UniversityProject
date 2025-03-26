@@ -27,7 +27,7 @@ public class Faculty : Entity
     public IReadOnlyCollection<Department> Departments => _departments;
 
     public static async Task<Faculty> Create(
-        CreateFacultyData data, 
+        CreateFacultyData data,
         CancellationToken cancellationToken = default)
     {
         await ValidateAsync(new CreateFacultyDataValidator(), data, cancellationToken);
@@ -36,5 +36,15 @@ public class Faculty : Entity
             Guid.NewGuid(),
             data.Title,
             data.Description);
+    }
+
+    public async Task Update(
+        UpdateFacultyData data,
+        CancellationToken cancellationToken = default)
+    {
+        await ValidateAsync(new UpdateFacultyDataValidator(), data, cancellationToken);
+
+        Title = data.Title;
+        Description = data.Description;
     }
 }

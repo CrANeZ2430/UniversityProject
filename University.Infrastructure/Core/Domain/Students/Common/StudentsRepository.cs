@@ -26,9 +26,9 @@ public class StudentsRepository(
             ?? throw new NotFoundException($"Cannot find the {nameof(Student)} with id {studentId}");
     }
 
-    public async Task<Student?> TryGetById(Guid studentId, CancellationToken cancellationToken = default)
+    public async Task<bool> Exits(Guid studentId, CancellationToken cancellationToken = default)
     {
         return await dbContext.Students
-            .FirstOrDefaultAsync(x => x.StudentId == studentId, cancellationToken);
+            .AnyAsync(x => x.StudentId == studentId, cancellationToken);
     }
 }

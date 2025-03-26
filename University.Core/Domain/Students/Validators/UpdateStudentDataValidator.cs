@@ -5,20 +5,19 @@ using University.Core.Domain.Groups.Common;
 using University.Core.Domain.Students.Checkers;
 using University.Core.Domain.Students.Data;
 using University.Core.Domain.Students.Rules;
-using Group = University.Core.Domain.Groups.Models.Group;
 
 namespace University.Core.Domain.Students.Validators;
 
-public class CreateStudentDataValidator : AbstractValidator<CreateStudentData>
+public class UpdateStudentDataValidator : AbstractValidator<UpdateStudentData>
 {
-    public CreateStudentDataValidator(
+    public UpdateStudentDataValidator(
         IGroupsRepository groupsRepository,
         IEmailMustBeUniqueChecker emailChecker,
         IPhoneMustBeUniqueChecker phoneChecker)
     {
         RuleFor(x => x.FirstName)
-            .NotEmpty().WithMessage($"{nameof(CreateStudentData.FirstName)} cannot be empty")
-            .MaximumLength(30).WithMessage($"{nameof(CreateStudentData.FirstName)} max length is 30");
+    .NotEmpty().WithMessage($"{nameof(CreateStudentData.FirstName)} cannot be empty")
+    .MaximumLength(30).WithMessage($"{nameof(CreateStudentData.FirstName)} max length is 30");
 
         RuleFor(x => x.LastName)
             .NotEmpty().WithMessage($"{nameof(CreateStudentData.LastName)} cannot be empty")
@@ -34,15 +33,15 @@ public class CreateStudentDataValidator : AbstractValidator<CreateStudentData>
         RuleFor(x => x.Email)
         .CustomAsync(async (email, context, cancellationToken) =>
         {
-                var checkResult = await new EmailMustBeUniqueBusinessRule(email, emailChecker).CheckAsync(cancellationToken);
+            var checkResult = await new EmailMustBeUniqueBusinessRule(email, emailChecker).CheckAsync(cancellationToken);
 
-                if (checkResult.IsSuccess) return;
+            if (checkResult.IsSuccess) return;
 
-                foreach (var error in checkResult.Errors)
-                {
-                    context.AddFailure(new ValidationFailure(nameof(CreateStudentData.Email), error));
-                }
-            });
+            foreach (var error in checkResult.Errors)
+            {
+                context.AddFailure(new ValidationFailure(nameof(CreateStudentData.Email), error));
+            }
+        });
 
         RuleFor(x => x.PhoneNumber)
             .NotEmpty().WithMessage($"{nameof(CreateStudentData.PhoneNumber)} cannot be empty")

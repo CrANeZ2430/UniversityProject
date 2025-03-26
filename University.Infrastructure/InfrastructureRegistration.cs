@@ -4,11 +4,13 @@ using University.Core.Common;
 using University.Core.Domain.Departments.Common;
 using University.Core.Domain.Faculties.Common;
 using University.Core.Domain.Groups.Common;
+using University.Core.Domain.Students.Checkers;
 using University.Core.Domain.Students.Common;
 using University.Infrastructure.Core.Common;
 using University.Infrastructure.Core.Domain.Departments.Common;
 using University.Infrastructure.Core.Domain.Faculties.Common;
 using University.Infrastructure.Core.Domain.Groups.Common;
+using University.Infrastructure.Core.Domain.Students.Checkers;
 using University.Infrastructure.Core.Domain.Students.Common;
 using University.Infrastructure.Middleware;
 
@@ -25,6 +27,9 @@ public static class InfrastructureRegistration
         services.AddScoped<IDepartmentsRepository, DepartmentsRepository>();
         services.AddScoped<IGroupsRepository, GroupsRepository>();
         services.AddScoped<IStudentsRepository, StudentsRepository>();
+
+        services.AddScoped<IEmailMustBeUniqueChecker, EmailMustBeUniqueChecker>();
+        services.AddScoped<IPhoneMustBeUniqueChecker, PhoneMustBeUniqueChecker>();
 
         services.AddSingleton<IExceptionToResponseMapper, ExceptionToResponseMapper>();
         services.AddTransient<ExceptionHandlerMiddleware>();

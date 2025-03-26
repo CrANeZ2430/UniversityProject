@@ -5,9 +5,9 @@ using University.Core.Domain.Groups.Data;
 
 namespace University.Core.Domain.Groups.Validators;
 
-public class CreateGroupDataValidator : AbstractValidator<CreateGroupData>
+public class UpdateGroupDataValidator : AbstractValidator<UpdateGroupData>
 {
-    public CreateGroupDataValidator(
+    public UpdateGroupDataValidator(
         IDepartmentsRepository departmentsRepository)
     {
         RuleFor(x => x.Name)

@@ -46,4 +46,16 @@ public class Department : Entity
             data.Description,
             data.FacultyId);
     }
+
+    public async Task Update(
+        UpdateDepartmentData data,
+        IFacultiesRepository facultiesRepository,
+        CancellationToken cancellationToken = default)
+    {
+        await ValidateAsync(new UpdateDepartmentDataValidator(facultiesRepository), data, cancellationToken);
+
+        Title = data.Title;
+        Description = data.Description;
+        FacultyId = data.FacultyId;
+    }
 }

@@ -19,7 +19,7 @@ namespace University.Persistence.UniversityDb.Migrations
                     StudentId = table.Column<Guid>(type: "uuid", nullable: false),
                     FirstName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
                     LastName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
-                    MiddleName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: false),
+                    MiddleName = table.Column<string>(type: "character varying(30)", maxLength: 30, nullable: true),
                     Email = table.Column<string>(type: "character varying(40)", maxLength: 40, nullable: false),
                     PhoneNumber = table.Column<string>(type: "character varying(20)", maxLength: 20, nullable: false),
                     GroupId = table.Column<Guid>(type: "uuid", nullable: false)

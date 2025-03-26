@@ -12,7 +12,7 @@ using University.Persistence.UniversityDb;
 namespace University.Persistence.UniversityDb.Migrations
 {
     [DbContext(typeof(UniversityDbContext))]
-    [Migration("20250326111921_AddedStudentEntity")]
+    [Migration("20250326124554_AddedStudentEntity")]
     partial class AddedStudentEntity
     {
         /// <inheritdoc />
@@ -138,7 +138,6 @@ namespace University.Persistence.UniversityDb.Migrations
                         .HasColumnOrder(3);
 
                     b.Property<string>("MiddleName")
-                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)")
                         .HasColumnOrder(4);

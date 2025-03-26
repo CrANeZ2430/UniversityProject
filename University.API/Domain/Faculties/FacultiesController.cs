@@ -6,6 +6,7 @@ using University.API.Domain.Faculties.Records;
 using University.Application.Common;
 using University.Application.Domain.Faculties.Commands.CreateFaculty;
 using University.Application.Domain.Faculties.Commands.DeleteFaculty;
+using University.Application.Domain.Faculties.Commands.UpdateFaculty;
 using University.Application.Domain.Faculties.Queries.GetFaculties;
 
 namespace University.API.Domain.Faculties;
@@ -44,6 +45,23 @@ public class FacultiesController(
         var id = await mediator.Send(command, cancellationToken);
 
         return Ok(id);
+    }
+
+    [HttpPut("{facultyId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    public async Task<IActionResult> UpdateFaculty(
+        [FromRoute][Required] Guid facultyId,
+        [FromQuery] UpdateFacultyRequest request,
+        CancellationToken cancellationToken = default)
+    {
+        var command = new UpdateFacultyCommand(
+            facultyId,
+            request.Title,
+            request.Description);
+
+        await mediator.Send(command, cancellationToken);
+
+        return Ok();
     }
 
     [HttpDelete("{facultyId}")]

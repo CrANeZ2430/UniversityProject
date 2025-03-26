@@ -4,23 +4,24 @@ using University.Core.Domain.Groups.Common;
 using University.Core.Domain.Students.Checkers;
 using University.Core.Domain.Students.Common;
 using University.Core.Domain.Students.Data;
-using University.Core.Domain.Students.Models;
 
-namespace University.Application.Domain.Students.Commands.CreateStudent;
+namespace University.Application.Domain.Students.Commands.UpdateStudent;
 
-public class CreateStudentCommandHandler(
+public class UpdateStudentCommandHandler(
     IGroupsRepository groupsRepository,
     IStudentsRepository studentsRepository,
     IUnitOfWork unitOfWork,
     IEmailMustBeUniqueChecker emailChecker,
     IPhoneMustBeUniqueChecker phoneChecker)
-    : IRequestHandler<CreateStudentCommand, Guid>
+    : IRequestHandler<UpdateStudentCommand>
 {
-    public async Task<Guid> Handle(
-        CreateStudentCommand command, 
-        CancellationToken cancellationToken = default)
+    public async Task Handle(
+        UpdateStudentCommand command, 
+        CancellationToken cancellationToken)
     {
-        var data = new CreateStudentData(
+        var student = await studentsRepository.GetById(command.StudentId);
+
+        var data = new UpdateStudentData(
             command.FirstName,
             command.LastName,
             command.MiddleName,
@@ -28,15 +29,7 @@ public class CreateStudentCommandHandler(
             command.PhoneNumber,
             command.GroupId);
 
-        var student = await Student.Create(
-            data, 
-            groupsRepository, 
-            emailChecker, 
-            phoneChecker);
-
-        await studentsRepository.Add(student, cancellationToken);
+        await student.Update(data, groupsRepository, emailChecker, phoneChecker, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
-
-        return student.StudentId;
     }
 }

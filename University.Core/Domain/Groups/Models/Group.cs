@@ -46,4 +46,16 @@ public class Group : Entity
             data.MaxStudents,
             data.DepartmentId);
     }
+
+    public async Task Update(
+        UpdateGroupData data,
+        IDepartmentsRepository departmentsRepository,
+        CancellationToken cancellationToken = default)
+    {
+        await ValidateAsync(new UpdateGroupDataValidator(departmentsRepository), data, cancellationToken);
+
+        Name = data.Name;
+        MaxStudents = data.MaxStudents;
+        DepartmentId = data.DepartmentId;
+    }
 }

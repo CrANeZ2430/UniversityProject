@@ -25,9 +25,17 @@ public class GroupsRepository(UniversityDbContext dbContext) : IGroupsRepository
             ?? throw new NotFoundException($"Cannot find the {nameof(Group)} with id {groupId}");
     }
 
-    public async Task<Group?> TryGetById(Guid groupId, CancellationToken cancellationToken = default)
+    public async Task<Group> GetByIdWithStudents(Guid groupId, CancellationToken cancellationToken = default)
     {
         return await dbContext.Groups
-            .FirstOrDefaultAsync(x => x.GroupId == groupId, cancellationToken);
+            .Include(x => x.Students)
+            .FirstOrDefaultAsync(x => x.GroupId == groupId, cancellationToken)
+            ?? throw new NotFoundException($"Cannot find the {nameof(Group)} with id {groupId}");
+    }
+
+    public async Task<bool> Exits(Guid groupId, CancellationToken cancellationToken = default)
+    {
+        return await dbContext.Groups
+            .AnyAsync(x => x.GroupId == groupId, cancellationToken);
     }
 }
