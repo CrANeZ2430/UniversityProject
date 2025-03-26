@@ -30,8 +30,16 @@ public class GroupEntityTypeConfiguration : IEntityTypeConfiguration<Group>
             .WithMany(x => x.Groups)
             .HasForeignKey(x => x.DepartmentId);
 
+        builder.HasMany(x => x.Students)
+            .WithOne(x => x.Group)
+            .HasForeignKey(x => x.GroupId);
+
         builder.Metadata
             .FindNavigation(nameof(Group.Department))!
+            .SetPropertyAccessMode(PropertyAccessMode.Field);
+
+        builder.Metadata
+            .FindNavigation(nameof(Group.Students))!
             .SetPropertyAccessMode(PropertyAccessMode.Field);
     }
 }

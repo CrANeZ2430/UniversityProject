@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using University.Core.Domain.Departments.Common;
+using University.Core.Domain.Departments.Models;
 using University.Core.Domain.Groups.Data;
 
 namespace University.Core.Domain.Groups.Validators;
@@ -17,7 +18,8 @@ public class CreateGroupDataValidator : AbstractValidator<CreateGroupData>
             .NotEmpty().WithMessage($"{nameof(CreateGroupData.MaxStudents)} cannot be empty");
 
         RuleFor(x => x.DepartmentId)
-            .NotEmpty().WithMessage($"{nameof(CreateGroupData.DepartmentId)} cannot be empty");
-            //.MustAsync(async (id, cancellationToken) => );
+            .NotEmpty().WithMessage($"{nameof(CreateGroupData.DepartmentId)} cannot be empty")
+            .MustAsync(async (id, cancellationToken) => await departmentsRepository.TryGetById(id) != null)
+            .WithMessage($"{nameof(CreateGroupData.DepartmentId)} must be {nameof(Department)} id");
     }
 }

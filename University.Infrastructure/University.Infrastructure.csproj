@@ -16,8 +16,4 @@
     <ProjectReference Include="..\University.Persistence\University.Persistence.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Application\Domain\Students\Queries\GetGroups\" />
-  </ItemGroup>
-
 </Project>

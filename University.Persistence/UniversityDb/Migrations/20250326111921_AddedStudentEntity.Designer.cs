@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using University.Persistence.UniversityDb;
@@ -11,9 +12,11 @@ using University.Persistence.UniversityDb;
 namespace University.Persistence.UniversityDb.Migrations
 {
     [DbContext(typeof(UniversityDbContext))]
-    partial class UniversityDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250326111921_AddedStudentEntity")]
+    partial class AddedStudentEntity
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -135,6 +138,7 @@ namespace University.Persistence.UniversityDb.Migrations
                         .HasColumnOrder(3);
 
                     b.Property<string>("MiddleName")
+                        .IsRequired()
                         .HasMaxLength(30)
                         .HasColumnType("character varying(30)")
                         .HasColumnOrder(4);

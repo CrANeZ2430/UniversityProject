@@ -10,9 +10,11 @@ namespace University.API.Domain.Departments;
 
 [Route(Routes.Departments)]
 public class DepartmentsController(
-    IMediator mediator) : ControllerBase
+    IMediator mediator) 
+    : ControllerBase
 {
     [HttpPost]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
     public async Task<IActionResult> CreateDepartment(
         [FromQuery] CreateDepartmentRequest request,
         CancellationToken cancellationToken = default)
@@ -28,6 +30,7 @@ public class DepartmentsController(
     }
 
     [HttpDelete("{departmentId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteDepartment(
         [FromRoute][Required] Guid departmentId,
         CancellationToken cancellationToken = default)

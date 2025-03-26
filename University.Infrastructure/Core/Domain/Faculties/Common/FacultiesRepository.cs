@@ -8,7 +8,7 @@ namespace University.Infrastructure.Core.Domain.Faculties.Common;
 
 public class FacultiesRepository(UniversityDbContext dbContext) : IFacultiesRepository
 {
-    public async Task Add(Faculty faculty)
+    public async Task Add(Faculty faculty, CancellationToken cancellationToken = default)
     {
         await dbContext.AddAsync(faculty);
     }

@@ -16,33 +16,33 @@ public class GetFacultiesQueryHandler(
     {
         var sqlQuery = dbContext
             .Faculties
-            .Include(x => x.Departments)
-            .ThenInclude(x => x.Groups)
             .AsNoTracking();
 
         var skip = query.PageSize * (query.Page - 1);
-
         var count = await sqlQuery.CountAsync(cancellationToken);
 
         var faculties = await sqlQuery
-            .OrderBy(x => x.Title)
+            .OrderBy(f => f.Title)
             .Skip(skip)
             .Take(query.PageSize)
-            .Select(x => new FacultyDto(
-                x.FacultyId,
-                x.Title,
-                x.Description,
-                x.Departments
-                .Select(x => new DepartmentDto(
-                    x.DepartmentId,
-                    x.Title,
-                    x.Description,
-                    x.Groups
-                    .Select(x => new GroupDto(
-                        x.GroupId,
-                        x.Name,
-                        x.MaxStudents,
-                        42))
+            .Select(f => new FacultyDto(
+                f.FacultyId,
+                f.Title,
+                f.Description,
+                f.Departments.Select(d => new DepartmentDto(
+                    d.DepartmentId,
+                    d.Title,
+                    d.Description,
+                    d.Groups.Select(g => new GroupDto(
+                        g.GroupId,
+                        g.Name,
+                        g.MaxStudents,
+                        g.Students.Count(),
+                        g.Students.Select(s => new StudentDto(
+                            s.FirstName,
+                            s.LastName,
+                            s.MiddleName))
+                        .ToArray()))
                     .ToArray()))
                 .ToArray()))
             .ToArrayAsync(cancellationToken);

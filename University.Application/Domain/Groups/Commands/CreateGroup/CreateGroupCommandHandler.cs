@@ -7,7 +7,7 @@ using University.Core.Domain.Groups.Models;
 
 namespace University.Application.Domain.Groups.Commands.CreateGroup;
 
-public class CreateGroupCommandHandler(
+public class CreateStudentCommandHandler(
     IGroupsRepository groupsRepository,
     IDepartmentsRepository departmentsRepository,
     IUnitOfWork unitOfWork)
@@ -24,7 +24,7 @@ public class CreateGroupCommandHandler(
 
         var group = await Group.Create(data, departmentsRepository);
 
-        await groupsRepository.Add(group);
+        await groupsRepository.Add(group, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return group.GroupId;

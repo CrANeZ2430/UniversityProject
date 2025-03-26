@@ -8,7 +8,7 @@ namespace University.Infrastructure.Core.Domain.Groups.Common;
 
 public class GroupsRepository(UniversityDbContext dbContext) : IGroupsRepository
 {
-    public async Task Add(Group group)
+    public async Task Add(Group group, CancellationToken cancellationToken = default)
     {
         await dbContext.Groups.AddAsync(group);
     }
@@ -22,7 +22,7 @@ public class GroupsRepository(UniversityDbContext dbContext) : IGroupsRepository
     {
         return await dbContext.Groups
             .FirstOrDefaultAsync(x => x.GroupId == groupId, cancellationToken)
-            ?? throw new NotFoundException($"Cannot find the {nameof(Group)} with id: {groupId}");
+            ?? throw new NotFoundException($"Cannot find the {nameof(Group)} with id {groupId}");
     }
 
     public async Task<Group?> TryGetById(Guid groupId, CancellationToken cancellationToken = default)

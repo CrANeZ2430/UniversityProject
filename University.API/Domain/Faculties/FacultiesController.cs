@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using University.API.Common.Constants;
 using University.API.Domain.Faculties.Records;
+using University.Application.Common;
 using University.Application.Domain.Faculties.Commands.CreateFaculty;
 using University.Application.Domain.Faculties.Commands.DeleteFaculty;
 using University.Application.Domain.Faculties.Queries.GetFaculties;
@@ -15,6 +16,7 @@ public class FacultiesController(
     : ControllerBase
 {
     [HttpGet]
+    [ProducesResponseType(typeof(PageResponse<FacultyDto[]>), StatusCodes.Status200OK)]
     public async Task<IActionResult> GetFaculties(
         [FromQuery][Required] int page = 1,
         [FromQuery][Required] int pageSize = 10,
@@ -24,12 +26,13 @@ public class FacultiesController(
             page,
             pageSize);
 
-        var data = await mediator.Send(query, cancellationToken);
+        var result = await mediator.Send(query, cancellationToken);
 
-        return Ok(data);
+        return Ok(result);
     }
 
     [HttpPost]
+    [ProducesResponseType(typeof(Guid), StatusCodes.Status200OK)]
     public async Task<IActionResult> CreateFaculty(
         [FromQuery] CreateFacultyRequest request,
         CancellationToken cancellationToken = default)
@@ -44,6 +47,7 @@ public class FacultiesController(
     }
 
     [HttpDelete("{facultyId}")]
+    [ProducesResponseType(StatusCodes.Status200OK)]
     public async Task<IActionResult> DeleteFaculty(
         [FromRoute][Required] Guid facultyId,
         CancellationToken cancellationToken = default)

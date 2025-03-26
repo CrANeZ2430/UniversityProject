@@ -4,4 +4,5 @@ public record GroupDto(
     Guid GroupId,
     string Name,
     int MaxStudents,
-    int CurrentStudents);
+    int CurrentStudents,
+    StudentDto[] Students);

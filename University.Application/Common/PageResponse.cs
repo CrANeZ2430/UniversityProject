@@ -2,5 +2,5 @@
 
 public record PageResponse<T>(
     int Count,
-    T Data)
+    T Result)
     where T : class;

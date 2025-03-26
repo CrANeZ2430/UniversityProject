@@ -1,4 +1,6 @@
-﻿namespace University.Application.Domain.Faculties.Queries.GetFaculties;
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace University.Application.Domain.Faculties.Queries.GetFaculties;
 
 public record FacultyDto(
     Guid FacultyId,

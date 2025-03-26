@@ -3,12 +3,14 @@ using University.Core.Domain.Departments.Common;
 using University.Core.Domain.Departments.Models;
 using University.Core.Domain.Groups.Data;
 using University.Core.Domain.Groups.Validators;
+using University.Core.Domain.Students.Models;
 
 namespace University.Core.Domain.Groups.Models;
 
 public class Group : Entity
 {
     private readonly Department _department;
+    public readonly List<Student> _students;
 
     private Group() { }
 
@@ -29,6 +31,7 @@ public class Group : Entity
     public int MaxStudents { get; private set; }
     public Guid DepartmentId { get; private set; }
     public Department Department => _department;
+    public IReadOnlyCollection<Student> Students => _students;
 
     public static async Task<Group> Create(
         CreateGroupData data,

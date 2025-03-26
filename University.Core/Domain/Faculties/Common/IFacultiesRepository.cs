@@ -4,7 +4,7 @@ namespace University.Core.Domain.Faculties.Common;
 
 public interface IFacultiesRepository
 {
-    Task Add(Faculty faculty);
+    Task Add(Faculty faculty, CancellationToken cancellationToken = default);
     void Remove(Faculty faculty);
     Task<Faculty> GetById(Guid facultyId, CancellationToken cancellationToken = default);
     Task<Faculty?> TryGetById(Guid facultyId, CancellationToken cancellationToken = default);

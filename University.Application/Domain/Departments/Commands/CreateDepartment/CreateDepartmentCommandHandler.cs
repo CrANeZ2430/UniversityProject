@@ -24,7 +24,7 @@ public class CreateDepartmentCommandHandler(
 
         var department = await Department.Create(data, facultiesRepository);
 
-        await departmentsRepository.Add(department);
+        await departmentsRepository.Add(department, cancellationToken);
         await unitOfWork.SaveChangesAsync(cancellationToken);
 
         return department.DepartmentId;
